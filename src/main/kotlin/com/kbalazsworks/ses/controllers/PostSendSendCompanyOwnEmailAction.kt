@@ -11,7 +11,7 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 @Path("/ses/send/company-own-email")
-class PostSendAction(
+class PostSendSendCompanyOwnEmailAction(
     private val companyOwnEmailSendService: CompanyOwnEmailSendService,
     private val requestMapperService: RequestMapperService
 ) {
