@@ -32,10 +32,10 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive:2.4.2.Final")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-qute
     implementation("io.quarkus:quarkus-resteasy-reactive-qute:2.4.2.Final")
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-maven-lombok
-    implementation("org.jetbrains.kotlin:kotlin-maven-lombok:1.6.0-RC2")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-openapi
     implementation("io.quarkus:quarkus-smallrye-openapi:2.5.0.CR1")
+    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+    implementation("javax.xml.bind:jaxb-api:2.3.0")
 }
 
 group = "com.kbalazsworks"
