@@ -12,6 +12,10 @@ class PostUploadRequest {
 
     @RestForm
     @PartType(MediaType.TEXT_PLAIN)
+    lateinit var subFolder: String
+
+    @RestForm
+    @PartType(MediaType.TEXT_PLAIN)
     lateinit var fileName: String
 
     @RestForm
