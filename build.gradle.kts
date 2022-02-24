@@ -36,6 +36,8 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-openapi:2.5.0.CR1")
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
     implementation("javax.xml.bind:jaxb-api:2.3.0")
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-jsonb
+    implementation("io.quarkus:quarkus-resteasy-reactive-jsonb:2.7.2.Final")
 }
 
 group = "com.kbalazsworks"

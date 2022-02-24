@@ -1,41 +1,38 @@
 package com.kbalazsworks.common.builders
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.kbalazsworks.common.entities.ApiResponseData
 import org.apache.http.HttpStatus
-import javax.ws.rs.core.Response
 
-class ResponseEntityBuilder {
-    private var data: Any? = null
+class ResponseEntityBuilder<T> {
+    private var data: T? = null
     private var errorCode: Int = 0
     private var statusCode: Int = HttpStatus.SC_OK
 //    private var headers: HttpHeaders = HttpHeadersImpl(emptyList()) @todo: implement
 
-    fun data(data: Any): ResponseEntityBuilder {
+    fun data(data: T): ResponseEntityBuilder<T> {
         this.data = data
 
         return this
     }
 
-    fun errorCode(errorCode: Int): ResponseEntityBuilder {
+    fun errorCode(errorCode: Int): ResponseEntityBuilder<T> {
         this.errorCode = errorCode
 
         return this
     }
 
-    fun statusCode(statusCode: Int): ResponseEntityBuilder {
+    fun statusCode(statusCode: Int): ResponseEntityBuilder<T> {
         this.statusCode = statusCode
 
         return this
     }
 
-    fun build(): Response? {
+    fun build(): ApiResponseData<T> {
         val success = errorCode == 0
         if (errorCode > 0 && statusCode == HttpStatus.SC_OK) {
 //            throw ApiException("Status code setup is needed for error response") @todo: implement
         }
-        val apiResponseData = ApiResponseData(data, success, errorCode, "1")
 
-        return Response.ok(ObjectMapper().writeValueAsString(apiResponseData)).status(300).build()
+        return ApiResponseData(data, success, errorCode, "1")
     }
 }
