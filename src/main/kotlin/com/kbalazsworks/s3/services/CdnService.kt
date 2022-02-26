@@ -32,19 +32,23 @@ class CdnService(
             val fullFileName = "/" + put.fileName + "-" + unixTimestamp + "." + put.fileExtension
             pathAndFile = put.cdnNamespaceEnum.value + put.subFolder + fullFileName
 
+            var s3Response = s3Repository.put(
+                PutObjectRequest(
+                    applicationPropertiesService.getAwsS3CdnBucket(),
+                    pathAndFile,
+                    content.inputStream(),
+                    objectMetadata
+                )
+            );
+
             val response = CdnServicePutResponse(
-                s3Repository.put(
-                    PutObjectRequest(
-                        applicationPropertiesService.getAwsS3CdnBucket(),
-                        pathAndFile,
-                        content.inputStream(),
-                        objectMetadata
-                    )
-                ),
                 pathAndFile,
-                fullFileName
+                fullFileName,
+                s3Response.eTag,
+                s3Response.contentMd5
             )
 //            log.info("Successful AWS S3 upload: " + response.path())
+
             response
         } catch (e: IOException) {
             throw AmazonS3Exception("AWS S3 upload error on: $pathAndFile")
