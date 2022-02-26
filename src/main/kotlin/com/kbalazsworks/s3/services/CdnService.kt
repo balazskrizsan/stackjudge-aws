@@ -32,7 +32,7 @@ class CdnService(
             val fullFileName = "/" + put.fileName + "-" + unixTimestamp + "." + put.fileExtension
             pathAndFile = put.cdnNamespaceEnum.value + put.subFolder + fullFileName
 
-            var s3Response = s3Repository.put(
+            val s3Response = s3Repository.put(
                 PutObjectRequest(
                     applicationPropertiesService.getAwsS3CdnBucket(),
                     pathAndFile,
