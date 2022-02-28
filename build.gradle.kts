@@ -38,6 +38,8 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.3.0")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-jsonb
     implementation("io.quarkus:quarkus-resteasy-reactive-jsonb:2.7.2.Final")
+    // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
+    runtimeOnly("io.github.microutils:kotlin-logging-jvm:2.1.21")
 }
 
 group = "com.kbalazsworks"

@@ -9,6 +9,7 @@ import com.kbalazsworks.stackjudge_aws.common.services.DateTimeFormatterService
 import com.kbalazsworks.stackjudge_aws.s3.repositories.S3Repository
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.CdnServicePutResponse
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.Put
+import org.slf4j.LoggerFactory
 import java.io.IOException
 import javax.enterprise.context.ApplicationScoped
 import kotlin.io.path.readBytes
@@ -20,8 +21,11 @@ class CdnService(
     private val s3Repository: S3Repository,
     private val localDateTimeFactory: LocalDateTimeFactory
 ) {
+    val logger = LoggerFactory.getLogger(CdnService::class.toString())
+
     @Throws(AmazonS3Exception::class)
     fun put(put: Put): CdnServicePutResponse {
+
         var pathAndFile = ""
 
         return try {
@@ -47,10 +51,13 @@ class CdnService(
                 s3Response.eTag,
                 s3Response.contentMd5
             )
-//            log.info("Successful AWS S3 upload: " + response.path())
+
+            logger.info("S3 upload: {} {}", response.path, put);
 
             response
         } catch (e: IOException) {
+            logger.info("AWS S3 upload error on: $pathAndFile")
+
             throw AmazonS3Exception("AWS S3 upload error on: $pathAndFile")
         }
     }
