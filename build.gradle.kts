@@ -40,6 +40,8 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive-jsonb:2.7.2.Final")
     // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
     runtimeOnly("io.github.microutils:kotlin-logging-jvm:2.1.21")
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
 group = "com.kbalazsworks"
