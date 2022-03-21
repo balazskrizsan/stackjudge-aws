@@ -26,8 +26,10 @@ dependencies {
     // custom
     // https://mvnrepository.com/artifact/org.eclipse.microprofile.rest.client/microprofile-rest-client-api
     implementation("org.eclipse.microprofile.rest.client:microprofile-rest-client-api:3.0")
-    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
-    implementation("com.amazonaws:aws-java-sdk:1.11.923")
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ses
+    implementation("com.amazonaws:aws-java-sdk-ses:1.12.181")
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.181")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive
     implementation("io.quarkus:quarkus-resteasy-reactive:2.4.2.Final")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-qute
@@ -42,6 +44,8 @@ dependencies {
     runtimeOnly("io.github.microutils:kotlin-logging-jvm:2.1.21")
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation("org.assertj:assertj-core:3.22.0")
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testImplementation("org.mockito:mockito-all:2.0.2-beta")
 }
 
 group = "com.kbalazsworks"
