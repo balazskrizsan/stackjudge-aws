@@ -1,7 +1,10 @@
-package com.kbalazsworks.stackjudge_aws.ses.services;
+package com.kbalazsworks.stackjudge_aws.ses.services
 
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService
-import com.amazonaws.services.simpleemail.model.*
+import com.amazonaws.services.simpleemail.model.Body
+import com.amazonaws.services.simpleemail.model.Content
+import com.amazonaws.services.simpleemail.model.Destination
+import com.amazonaws.services.simpleemail.model.Message
+import com.amazonaws.services.simpleemail.model.SendEmailRequest
 import com.kbalazsworks.stackjudge_aws.ses.expections.SesSendException
 import com.kbalazsworks.stackjudge_aws.ses.factories.AmazonSimpleEmailServiceFactory
 import com.kbalazsworks.stackjudge_aws.ses.value_object.CompanyOwnEmail
@@ -9,13 +12,15 @@ import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class SendService(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmailServiceFactory) {
-    private val FROM_EMAIL = "krizsan.balazs@gmail.com"
+    companion object {
+        private const val EMAIL_SOURCE = "krizsan.balazs@gmail.com"
+    }
 
     @Throws(SesSendException::class)
     fun send(email: CompanyOwnEmail) {
         try {
-            val client: AmazonSimpleEmailService = amazonSimpleEmailServiceFactory.create()
-            val request: SendEmailRequest = SendEmailRequest()
+            val client = amazonSimpleEmailServiceFactory.create()
+            val request = SendEmailRequest()
                 .withDestination(Destination().withToAddresses(email.to))
                 .withMessage(
                     Message()
@@ -26,7 +31,7 @@ class SendService(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmail
                         )
                         .withSubject(Content().withCharset("UTF-8").withData(email.subject))
                 )
-                .withSource(FROM_EMAIL)
+                .withSource(EMAIL_SOURCE)
             client.sendEmail(request)
         } catch (e: Exception) {
 //            log.error("Email send error.", e)
