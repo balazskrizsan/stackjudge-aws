@@ -7,11 +7,7 @@ import javax.enterprise.context.ApplicationScoped
 @ApplicationScoped
 class SesServiceProvider(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmailServiceFactory) {
 
-    fun getSendService(): SendService {
-        return getSendService(amazonSimpleEmailServiceFactory)
-    }
-
-    fun getSendService(amazonSimpleEmailServiceFactoryReplacer: AmazonSimpleEmailServiceFactory?): SendService {
-        return SendService(amazonSimpleEmailServiceFactoryReplacer ?: amazonSimpleEmailServiceFactory)
-    }
+    fun getSendService() = getSendService(amazonSimpleEmailServiceFactory)
+    fun getSendService(amazonSimpleEmailServiceFactoryReplacer: AmazonSimpleEmailServiceFactory?) =
+        SendService(amazonSimpleEmailServiceFactoryReplacer ?: amazonSimpleEmailServiceFactory)
 }

@@ -10,9 +10,9 @@ import com.kbalazsworks.stackjudge_aws.s3.repositories.S3Repository
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.CdnServicePutResponse
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.Put
 import org.slf4j.LoggerFactory
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import javax.enterprise.context.ApplicationScoped
-import kotlin.io.path.readBytes
 
 @ApplicationScoped
 class CdnService(
@@ -25,14 +25,13 @@ class CdnService(
 
     @Throws(AmazonS3Exception::class)
     fun put(put: Put): CdnServicePutResponse {
-
         var pathAndFile = ""
 
         return try {
-            val content = put.content.uploadedFile().readBytes()
+            val content = put.content
             val objectMetadata = ObjectMetadata()
-            objectMetadata.contentLength = content.size.toLong()
-            val unixTimestamp: Long = dateTimeFormatterService.toEpoch(localDateTimeFactory.create())
+            objectMetadata.contentLength = content.length.toLong()
+            val unixTimestamp = dateTimeFormatterService.toEpoch(localDateTimeFactory.create())
             val fullFileName = "/" + put.fileName + "-" + unixTimestamp + "." + put.fileExtension
             pathAndFile = put.cdnNamespaceEnum.value + put.subFolder + fullFileName
 
@@ -40,22 +39,20 @@ class CdnService(
                 PutObjectRequest(
                     applicationPropertiesService.getAwsS3CdnBucket(),
                     pathAndFile,
-                    content.inputStream(),
+                    ByteArrayInputStream(content.toByteArray()),
                     objectMetadata
                 )
-            );
+            )
 
-            val response = CdnServicePutResponse(
+            logger.info("S3 upload: {} {}", pathAndFile, put);
+
+            CdnServicePutResponse(
                 pathAndFile,
                 fullFileName,
                 s3Response.eTag,
                 s3Response.contentMd5
             )
-
-            logger.info("S3 upload: {} {}", response.path, put);
-
-            response
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             logger.info("AWS S3 upload error on: $pathAndFile")
 
             throw AmazonS3Exception("AWS S3 upload error on: $pathAndFile")

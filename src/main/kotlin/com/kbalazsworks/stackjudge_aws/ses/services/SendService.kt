@@ -8,12 +8,14 @@ import com.amazonaws.services.simpleemail.model.SendEmailRequest
 import com.kbalazsworks.stackjudge_aws.ses.expections.SesSendException
 import com.kbalazsworks.stackjudge_aws.ses.factories.AmazonSimpleEmailServiceFactory
 import com.kbalazsworks.stackjudge_aws.ses.value_object.CompanyOwnEmail
+import org.slf4j.LoggerFactory
 import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class SendService(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmailServiceFactory) {
     companion object {
         private const val EMAIL_SOURCE = "krizsan.balazs@gmail.com"
+        private val logger = LoggerFactory.getLogger(SendService::class.toString())
     }
 
     @Throws(SesSendException::class)
@@ -34,7 +36,8 @@ class SendService(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmail
                 .withSource(EMAIL_SOURCE)
             client.sendEmail(request)
         } catch (e: Exception) {
-//            log.error("Email send error.", e)
+            logger.error("Email send error.", e)
+
             throw SesSendException("E-mail send error.")
         }
     }

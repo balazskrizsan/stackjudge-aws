@@ -8,5 +8,5 @@ data class Put(
     var subFolder: String,
     var fileName: String,
     var fileExtension: String,
-    var content: FileUpload
+    var content: String
 )

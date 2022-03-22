@@ -44,8 +44,8 @@ dependencies {
     runtimeOnly("io.github.microutils:kotlin-logging-jvm:2.1.21")
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation("org.assertj:assertj-core:3.22.0")
-    // https://mvnrepository.com/artifact/org.mockito/mockito-all
-    testImplementation("org.mockito:mockito-all:2.0.2-beta")
+    // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
 
 group = "com.kbalazsworks"
