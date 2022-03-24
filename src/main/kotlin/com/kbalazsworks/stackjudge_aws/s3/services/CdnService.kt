@@ -6,12 +6,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest
 import com.kbalazsworks.stackjudge_aws.common.factories.LocalDateTimeFactory
 import com.kbalazsworks.stackjudge_aws.common.services.ApplicationPropertiesService
 import com.kbalazsworks.stackjudge_aws.common.services.DateTimeFormatterService
+import com.kbalazsworks.stackjudge_aws.s3.exception.S3PutException
 import com.kbalazsworks.stackjudge_aws.s3.repositories.S3Repository
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.CdnServicePutResponse
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.Put
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
-import java.io.IOException
 import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
@@ -55,7 +55,7 @@ class CdnService(
         } catch (e: Exception) {
             logger.info("AWS S3 upload error on: $pathAndFile")
 
-            throw AmazonS3Exception("AWS S3 upload error on: $pathAndFile")
+            throw S3PutException("AWS S3 upload error on: $pathAndFile")
         }
     }
 }
