@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.allopen") version "1.5.31"
     id("io.quarkus")
     id("java-library")
+    id("net.afanasev.sekret") version "0.1.2"
 }
 
 repositories {
@@ -19,6 +20,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
     implementation("io.quarkus:quarkus-arc:2.4.1.Final")
     implementation("org.projectlombok:lombok:1.18.20")
+    implementation("net.afanasev:sekret-compiler:0.1.0")
+    implementation("net.afanasev:sekret-annotation:0.1.2")
+    implementation("net.afanasev:sekret-kotlin-plugin:0.1.2")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
@@ -65,4 +69,15 @@ allOpen {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     kotlinOptions.javaParameters = true
+}
+
+sekret {
+    // "■■■" by default
+    mask = "**masked-value**"
+
+    // true by default
+    enabled = true
+
+    // true by default
+    maskNulls = false
 }
