@@ -34,7 +34,9 @@ class SendService(private val amazonSimpleEmailServiceFactory: AmazonSimpleEmail
                         .withSubject(Content().withCharset("UTF-8").withData(email.subject))
                 )
                 .withSource(EMAIL_SOURCE)
-            client.sendEmail(request)
+            val response = client.sendEmail(request)
+
+            logger.info("Message sent: " + response.messageId)
         } catch (e: Exception) {
             logger.error("Email send error.", e)
 
