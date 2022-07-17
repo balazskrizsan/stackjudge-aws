@@ -4,6 +4,7 @@ plugins {
     id("io.quarkus")
     id("java-library")
     id("net.afanasev.sekret") version "0.1.2"
+    id("maven-publish")
 }
 
 repositories {
@@ -14,6 +15,24 @@ repositories {
 val quarkusPlatformGroupId: String by project
 val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.kbalazsworks"
+            artifactId = "colorstackjudge-aws"
+            version = "1.0-SNAPSHOT"
+
+            from(components["java"])
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        maven("https://jitpack.io")
+    }
+}
 
 dependencies {
     implementation("io.quarkus:quarkus-kotlin")
