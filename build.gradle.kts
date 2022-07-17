@@ -5,6 +5,7 @@ plugins {
     id("java-library")
     id("net.afanasev.sekret") version "0.1.2"
     id("maven-publish")
+    id("java")
 }
 
 repositories {
@@ -19,11 +20,7 @@ val quarkusPlatformVersion: String by project
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "com.kbalazsworks"
-            artifactId = "stackjudge_aws"
-            version = "1.0-SNAPSHOT"
-
-            from(components["java"])
+            artifact("build/libs/stackjudge-aws-1.0-SNAPSHOT.jar")
         }
     }
 }
@@ -47,7 +44,7 @@ dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
 
     // custom
-    implementation("com.github.balazskrizsan:simple_oidc:c0213f36d7d41d97c7391d43f920d5b4756715c2")
+//    implementation("com.github.balazskrizsan:simple_oidc:c0213f36d7d41d97c7391d43f920d5b4756715c2")
     // https://mvnrepository.com/artifact/org.eclipse.microprofile.rest.client/microprofile-rest-client-api
     implementation("org.eclipse.microprofile.rest.client:microprofile-rest-client-api:3.0")
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ses
