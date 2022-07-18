@@ -5,16 +5,15 @@ import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class ApplicationPropertiesService {
+    @field:ConfigProperty(name = "aws.access_key")
+    lateinit var awsAccessKey: String
 
-    @ConfigProperty(name = "aws.access_key")
-    var awsAccessKeyVal: String = ""
-    fun getAwsAccessKey() = awsAccessKeyVal
+    @field:ConfigProperty(name = "aws.secret_key")
+    lateinit var awsSecretKey: String
 
-    @ConfigProperty(name = "aws.secret_key")
-    var awsSecretKeyVal: String = ""
-    fun getAwsSecretKey() = awsSecretKeyVal
+    @field:ConfigProperty(name = "aws.s3.cdn_bucket")
+    lateinit var awsS3CdnBucket: String
 
-    @ConfigProperty(name = "aws.s3.cdn_bucket")
-    var awsS3CdnBucketVal: String = ""
-    fun getAwsS3CdnBucket() = awsS3CdnBucketVal
+    @field:ConfigProperty(name = "keystore.full_path")
+    lateinit var keystoreFullPath: String
 }

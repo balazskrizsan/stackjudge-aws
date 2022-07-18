@@ -15,8 +15,8 @@ class AmazonS3ClientFactory(private val applicationPropertiesService: Applicatio
         .withCredentials(
             AWSStaticCredentialsProvider(
                 BasicAWSCredentials(
-                    applicationPropertiesService.getAwsAccessKey(),
-                    applicationPropertiesService.getAwsSecretKey()
+                    applicationPropertiesService.awsAccessKey,
+                    applicationPropertiesService.awsSecretKey
                 )
             )
         )

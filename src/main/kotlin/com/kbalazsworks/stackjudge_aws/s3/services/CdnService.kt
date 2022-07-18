@@ -37,7 +37,7 @@ class CdnService(
 
             val s3Response = s3Repository.put(
                 PutObjectRequest(
-                    applicationPropertiesService.getAwsS3CdnBucket(),
+                    applicationPropertiesService.awsS3CdnBucket,
                     pathAndFile,
                     ByteArrayInputStream(content.toByteArray()),
                     objectMetadata
