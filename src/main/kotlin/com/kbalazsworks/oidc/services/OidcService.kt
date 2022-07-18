@@ -7,6 +7,7 @@ import com.kbalazsworks.oidc.exceptions.OidcExpiredTokenException
 import com.kbalazsworks.oidc.exceptions.OidcJwksVerificationException
 import com.kbalazsworks.stackjudge_aws.common.factories.SystemFactory
 import org.slf4j.LoggerFactory
+import java.util.stream.Stream
 
 class OidcService(
     private val oidcConfig: OidcConfig,
@@ -82,7 +83,9 @@ class OidcService(
     override fun checkScopesInToken(token: String, scopes: List<String>) {
         checkValidated(token)
 
-        if (!tokenService.getJwtData(token).scope.containsAll(scopes)) {
+        val matchedScopes = tokenService.getJwtData(token).scope.stream().filter { s -> scopes.contains(s) }
+
+        if (matchedScopes.count() == 0L) {
             throw OidcException("Scope missing from token")
         }
     }
