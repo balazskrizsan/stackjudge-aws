@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.kbalazsworks.oidc.entities.JwtData
 import com.kbalazsworks.oidc.exceptions.OidcException
 import com.kbalazsworks.oidc.exceptions.OidcJwtParseException
+import org.slf4j.LoggerFactory
 import java.math.BigInteger
 import java.security.KeyFactory
 import java.security.PublicKey
@@ -15,6 +16,10 @@ import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class TokenService {
+    companion object {
+        private val logger = LoggerFactory.getLogger(OidcService::class.toString())
+    }
+
     private val objectMapper = ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
@@ -28,9 +33,11 @@ class TokenService {
 
             return publicKey
         } catch (e: Exception) {
-            when (e) {
+            when(e) {
                 is IllegalAccessException, is IndexOutOfBoundsException -> {
-                    throw OidcException("Public key error: " + e.message)
+                    logger.error("Public key error: {}", e.message)
+
+                    throw OidcException("Public key error")
                 }
                 else -> throw e
             }

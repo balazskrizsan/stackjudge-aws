@@ -7,7 +7,6 @@ import com.kbalazsworks.oidc.exceptions.OidcExpiredTokenException
 import com.kbalazsworks.oidc.exceptions.OidcJwksVerificationException
 import com.kbalazsworks.stackjudge_aws.common.factories.SystemFactory
 import org.slf4j.LoggerFactory
-import java.util.stream.Stream
 
 class OidcService(
     private val oidcConfig: OidcConfig,
