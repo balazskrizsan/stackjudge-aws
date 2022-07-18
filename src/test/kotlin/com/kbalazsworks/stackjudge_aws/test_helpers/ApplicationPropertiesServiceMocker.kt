@@ -14,9 +14,9 @@ class ApplicationPropertiesServiceMocker {
         {
             val mock = MockCreator.getApplicationPropertiesServiceMock();
 
-            Mockito.`when`(mock.getAwsAccessKey()).thenReturn(AWS_ACCESS_KEY)
-            Mockito.`when`(mock.getAwsSecretKey()).thenReturn(AWS_SECRET_KEY)
-            Mockito.`when`(mock.getAwsS3CdnBucket()).thenReturn(AWS_S3_CDN_BUCKET)
+            Mockito.`when`(mock.awsAccessKey).thenReturn(AWS_ACCESS_KEY)
+            Mockito.`when`(mock.awsSecretKey).thenReturn(AWS_SECRET_KEY)
+            Mockito.`when`(mock.awsS3CdnBucket).thenReturn(AWS_S3_CDN_BUCKET)
 
             return mock
         }
