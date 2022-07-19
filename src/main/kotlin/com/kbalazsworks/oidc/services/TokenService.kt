@@ -3,6 +3,7 @@ package com.kbalazsworks.oidc.services
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kbalazsworks.oidc.entities.JwtData
+import com.kbalazsworks.oidc.entities.JwtHeader
 import com.kbalazsworks.oidc.exceptions.OidcException
 import com.kbalazsworks.oidc.exceptions.OidcJwtParseException
 import org.slf4j.LoggerFactory
@@ -59,6 +60,18 @@ class TokenService {
             val decodedJwtData = Base64.getDecoder().decode(dataPart).decodeToString()
 
             return objectMapper.readValue(decodedJwtData, JwtData::class.java)
+        } catch (e: Exception) {
+            throw OidcJwtParseException(e.message ?: "")
+        }
+    }
+
+    fun getJwtHeader(token: String): JwtHeader {
+        try {
+            val tokenParts = token.split(".")
+            val dataPart = tokenParts[0].toByteArray()
+            val decodedJwtHeader = Base64.getDecoder().decode(dataPart).decodeToString()
+
+            return objectMapper.readValue(decodedJwtHeader, JwtHeader::class.java)
         } catch (e: Exception) {
             throw OidcJwtParseException(e.message ?: "")
         }

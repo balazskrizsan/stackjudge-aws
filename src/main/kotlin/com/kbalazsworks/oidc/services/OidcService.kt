@@ -49,8 +49,11 @@ class OidcService(
     }
 
     private fun checkJwksVerifiedTokenLogic(token: String): Boolean {
-        val oneKey = callJwksEndpoint().keys[0]
-        val publicKey = tokenService.getPublicKey(oneKey.n, oneKey.e)
+        val alg = tokenService.getJwtHeader(token).alg
+
+        val key = callJwksEndpoint().keys.stream().filter { k -> k.alg == alg }.findFirst().get()
+
+        val publicKey = tokenService.getPublicKey(key.n, key.e)
         val signature = tokenService.getSignature(token)
         val signedData = tokenService.getSignedData(token)
 
