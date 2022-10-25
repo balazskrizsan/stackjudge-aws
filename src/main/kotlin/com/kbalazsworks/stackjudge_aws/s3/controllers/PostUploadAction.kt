@@ -1,6 +1,6 @@
 package com.kbalazsworks.stackjudge_aws.s3.controllers
 
-import com.kbalazsworks.oidc.services.IOidcService
+import com.kbalazsworks.stackjudge_aws.oidc.OidcServiceFactory
 import com.kbalazsworks.stackjudge_aws.common.builders.ResponseEntityBuilder
 import com.kbalazsworks.stackjudge_aws.common.entities.ApiResponseData
 import com.kbalazsworks.stackjudge_aws.s3.requests.PostUploadRequest
@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType
 class PostUploadAction(
     private val cdnService: CdnService,
     private val requestMapperService: RequestMapperService,
-    private val oidcService: IOidcService,
+    private val oidcServiceFactory: OidcServiceFactory
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(PostSendSendCompanyOwnEmailAction::class.toString())
@@ -34,7 +34,7 @@ class PostUploadAction(
         @MultipartForm request: PostUploadRequest,
         @RestHeader("Authorization") token: String,
     ): ApiResponseData<CdnServicePutResponse> {
-        oidcService.checkScopesInToken(token, listOf("sj.aws.ec2.upload_company_logo", "sj.aws.ec2.upload_company_map"))
+        oidcServiceFactory.get().checkScopesInToken(token, listOf("sj.aws.ec2.upload_company_logo", "sj.aws.ec2.upload_company_map"))
 
         val mappedRequest = requestMapperService.map(request)
 

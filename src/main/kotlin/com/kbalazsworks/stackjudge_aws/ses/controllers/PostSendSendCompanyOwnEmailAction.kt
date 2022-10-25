@@ -1,8 +1,8 @@
 package com.kbalazsworks.stackjudge_aws.ses.controllers
 
-import com.kbalazsworks.oidc.services.IOidcService
 import com.kbalazsworks.stackjudge_aws.common.builders.ResponseEntityBuilder
 import com.kbalazsworks.stackjudge_aws.common.entities.ApiResponseData
+import com.kbalazsworks.stackjudge_aws.oidc.OidcServiceFactory
 import com.kbalazsworks.stackjudge_aws.ses.requests.PostCompanyOwnEmailRequest
 import com.kbalazsworks.stackjudge_aws.ses.services.CompanyOwnEmailSendService
 import com.kbalazsworks.stackjudge_aws.ses.services.RequestMapperService
@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType
 class PostSendSendCompanyOwnEmailAction(
     private val companyOwnEmailSendService: CompanyOwnEmailSendService,
     private val requestMapperService: RequestMapperService,
-    private val oidcService: IOidcService,
+    private val oidcServiceFactory: OidcServiceFactory,
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(PostSendSendCompanyOwnEmailAction::class.toString())
@@ -32,7 +32,7 @@ class PostSendSendCompanyOwnEmailAction(
         @MultipartForm request: PostCompanyOwnEmailRequest,
         @RestHeader("Authorization") token: String,
     ): ApiResponseData<String> {
-        oidcService.checkScopesInToken(token, listOf("sj.aws.ses.send_mail"))
+        oidcServiceFactory.get().checkScopesInToken(token, listOf("sj.aws.ses.send_mail"))
 
         val mappedRequest = requestMapperService.map(request)
 
