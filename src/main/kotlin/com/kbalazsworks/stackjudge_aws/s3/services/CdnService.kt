@@ -7,7 +7,9 @@ import com.kbalazsworks.stackjudge_aws.common.factories.LocalDateTimeFactory
 import com.kbalazsworks.stackjudge_aws.common.services.ApplicationPropertiesService
 import com.kbalazsworks.stackjudge_aws.common.services.DateTimeFormatterService
 import com.kbalazsworks.stackjudge_aws.s3.exception.S3PutException
+import com.kbalazsworks.stackjudge_aws.s3.repositories.RemoteFileRepository
 import com.kbalazsworks.stackjudge_aws.s3.repositories.S3Repository
+import com.kbalazsworks.stackjudge_aws.s3.responses.PutAndSaveResponse
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.CdnServicePutResponse
 import com.kbalazsworks.stackjudge_aws.s3.value_objects.Put
 import org.slf4j.LoggerFactory
@@ -19,6 +21,7 @@ class CdnService(
     private val applicationPropertiesService: ApplicationPropertiesService,
     private val dateTimeFormatterService: DateTimeFormatterService,
     private val s3Repository: S3Repository,
+    private val remoteFileRepository: RemoteFileRepository,
     private val localDateTimeFactory: LocalDateTimeFactory
 ) {
     val logger = LoggerFactory.getLogger(CdnService::class.toString())
@@ -44,7 +47,7 @@ class CdnService(
                 )
             )
 
-            logger.info("S3 upload: {} {}", pathAndFile, put);
+            logger.info("S3 upload: {} {}", pathAndFile, put)
 
             CdnServicePutResponse(
                 pathAndFile,
@@ -57,5 +60,16 @@ class CdnService(
 
             throw S3PutException("AWS S3 upload error on: $pathAndFile")
         }
+    }
+
+    @Throws(AmazonS3Exception::class)
+    fun putAndSave(put: Put): PutAndSaveResponse {
+        val response = put(put)
+
+        return PutAndSaveResponse(
+            remoteFileRepository.save(
+                MapperService.mapCdnServicePutResponseToRemoteFile(response)
+            )
+        )
     }
 }
