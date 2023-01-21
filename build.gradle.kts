@@ -32,6 +32,8 @@ allprojects {
 }
 
 dependencies {
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("io.quarkus:quarkus-agroal")
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
     implementation("io.quarkus:quarkus-arc:2.4.1.Final")
@@ -67,6 +69,8 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.22.0")
     // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    // https://mvnrepository.com/artifact/org.jooq/jooq
+    implementation("org.jooq:jooq:3.17.7")
 }
 
 group = "com.kbalazsworks"
