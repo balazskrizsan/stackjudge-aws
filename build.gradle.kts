@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.allopen") version "1.5.31"
+    kotlin("jvm") version "1.7.20"
+    kotlin("plugin.allopen") version "1.7.20"
     id("io.quarkus")
     id("java-library")
     id("net.afanasev.sekret") version "0.1.2"
@@ -56,7 +56,7 @@ dependencies {
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-qute
     implementation("io.quarkus:quarkus-resteasy-reactive-qute:2.4.2.Final")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-smallrye-openapi
-    implementation("io.quarkus:quarkus-smallrye-openapi:2.5.0.CR1")
+    implementation("io.quarkus:quarkus-smallrye-openapi:2.16.0.Final")
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
     implementation("javax.xml.bind:jaxb-api:2.3.0")
     // https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-reactive-jsonb
